@@ -52,7 +52,7 @@ def nicer_way(lower_limit, upper_limit):
             count = 0
             string_list.append('\n')
 
-    #Next, I join the list of all values in the list and return as a string
+    # Next, I join the list of all values in the list and return as a string
     return "".join(string_list)
 
 
