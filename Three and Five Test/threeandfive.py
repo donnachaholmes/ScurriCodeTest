@@ -3,18 +3,18 @@ def simple():
     count = 0
     for i in range(1, 101):
         if i % 3 == 0 and i % 5 == 0:
-            print('ThreeFive'),
+            print('ThreeFive ', end='')
         elif i % 3 == 0:
-            print('Three'), ;
+            print('Three ', end='')
         elif i % 5 == 0:
-            print('Five'), ;
+            print('Five ', end='')
         else:
-            print(i), ;
+            print(i, end=' ')
 
         count += 1
         if count == 10:
             count = 0
-            print('\n'), ;
+            print('\n')
 
 
 # A bit of a nicer way of doing it is to define a function that takes two arguments and displays this as needed
