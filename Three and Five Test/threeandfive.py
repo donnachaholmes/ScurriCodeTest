@@ -1,20 +1,18 @@
-def simple():
-    print('**** Straight Forward Function ****\n')
-    count = 0
-    for i in range(1, 101):
-        if i % 3 == 0 and i % 5 == 0:
-            print('ThreeFive ', end='')
-        elif i % 3 == 0:
-            print('Three ', end='')
-        elif i % 5 == 0:
-            print('Five ', end='')
-        else:
-            print(i, end=' ')
+count = 0
+for i in range(1, 101):
+    if i % 3 == 0 and i % 5 == 0:
+        print('ThreeFive ', end='')
+    elif i % 3 == 0:
+        print('Three ', end='')
+    elif i % 5 == 0:
+        print('Five ', end='')
+    else:
+        print(i, end=' ')
 
-        count += 1
-        if count == 10:
-            count = 0
-            print('\n', end='')
+    count += 1
+    if count == 10:
+        count = 0
+        print('\n', end='')
 
 
 # A bit of a nicer way of doing it is to define a function that takes two arguments and displays this as needed
@@ -49,9 +47,6 @@ def nicer_way(lower_limit, upper_limit):
     # Next, I join the list of all values in the list and return as a string
     return "".join(string_list)
 
-
-# Call the simple way of doing this task
-simple()
 
 print('\n')
 print('**** Function that takes two arguments ****')
