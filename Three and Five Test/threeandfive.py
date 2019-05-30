@@ -14,7 +14,7 @@ def simple():
         count += 1
         if count == 10:
             count = 0
-            print('\n')
+            print('\n', end='')
 
 
 # A bit of a nicer way of doing it is to define a function that takes two arguments and displays this as needed
