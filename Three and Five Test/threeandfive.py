@@ -1,23 +1,20 @@
-count = 0
 for i in range(1, 101):
+    num = str(i)
     if i % 3 == 0 and i % 5 == 0:
-        print('ThreeFive ', end='')
+        num = 'ThreeFive'
     elif i % 3 == 0:
-        print('Three ', end='')
+        num = 'Three'
     elif i % 5 == 0:
-        print('Five ', end='')
-    else:
-        print(i, end=' ')
+        num = 'Five'
 
-    count += 1
-    if count == 10:
-        count = 0
+    print(num, end=' ')
+
+    if i % 10 == 0:
         print('\n', end='')
 
 
 # A bit of a nicer way of doing it is to define a function that takes two arguments and displays this as needed
 def nicer_way(lower_limit, upper_limit):
-    # Let the user know the range of numbers being examined
     print('Displaying all the digits in the range {} to {}.\n'.format(lower_limit, upper_limit))
     upper_limit += 1
     # I create an empty list to add the values to before printing
