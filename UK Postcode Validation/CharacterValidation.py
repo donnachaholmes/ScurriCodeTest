@@ -41,12 +41,12 @@ class CharacterValidator:
     # The flow of testing is that the inward code is tested and if it is validated the outward code is then tested
     def __init__(self, area_and_district_list, full_postcode_list):
         self.area_and_district_list = area_and_district_list
-        self.full_postcode_list = full_postcode_list
-        self.single_digit_area_letter = "".join(area_and_district_list[:1])
-        self.single_digit_district_test = "".join(area_and_district_list[:2])
-        self.double_digit_district_test = "".join(area_and_district_list[:2])
-
         self.area_and_district = "".join(area_and_district_list)
+        self.full_postcode_list = full_postcode_list
+
+        self.single_digit_area_letter = "".join(area_and_district_list[:1])
+        self.district_test = "".join(area_and_district_list[:2])
+
         self.postcode_first_position = "".join(area_and_district_list[:1])
         self.postcode_second_position = "".join(area_and_district_list[1:2])
         self.postcode_third_position = "".join(area_and_district_list[2:])
@@ -106,10 +106,10 @@ class CharacterValidator:
         # variable (which is just the postcode area and compare it against the list of areas that have single digit
         # districts. If it matches, we test the outward code, otherwise we return a detailed error
         elif re.match(r"^%s%s\d$" % FIRST_AND_SECOND_POSITION_LETTERS, self.area_and_district) \
-                and self.double_digit_district_test not in DOUBLE_DIGIT_DISTRICTS:
+                and self.district_test not in DOUBLE_DIGIT_DISTRICTS:
             zero_district_test = list(self.area_and_district_list)
             zero_district_test = int(zero_district_test[2])
-            if zero_district_test == 0 and self.double_digit_district_test not in ZERO_DISTRICTS:
+            if zero_district_test == 0 and self.district_test not in ZERO_DISTRICTS:
                 raise ValueError("Invalid Postcode")
             else:
                 return self.test_postcode_sector_and_unit_entries()
@@ -128,7 +128,7 @@ class CharacterValidator:
                 # As this is a double digit area with a single digit district, we need to ensure that the area is not
                 # specified to only have a double digit district before validating - we again return a detailed error
                 # if conditions are not met
-                if self.double_digit_district_test not in DOUBLE_DIGIT_DISTRICTS:
+                if self.district_test not in DOUBLE_DIGIT_DISTRICTS:
                     return self.test_postcode_sector_and_unit_entries()
                 else:
                     raise ValueError("Invalid Postcode")
@@ -136,7 +136,7 @@ class CharacterValidator:
         # The extra validation here is making sure the area code is not in the only single digit district code list
         # If it is, we throw an error detailing this
         elif re.match(r"^%s%s\d{2}$" % FIRST_AND_SECOND_POSITION_LETTERS, self.area_and_district):
-                if self.single_digit_district_test not in SINGLE_DIGIT_DISTRICTS:
+                if self.district_test not in SINGLE_DIGIT_DISTRICTS:
                     return self.test_postcode_sector_and_unit_entries()
                 else:
                     raise ValueError("Invalid Postcode")
