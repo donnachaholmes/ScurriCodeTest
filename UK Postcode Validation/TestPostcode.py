@@ -11,7 +11,7 @@ valid_postcodes = [
     "SK1 3PG", "PO13 0HG", "b13 8nl", "EC1Y8JR", "AB42 4XH", "WD99 1AX", "CV11 6PR", "G44 3DA", "EX39 4FW",
     "BS10 6AF", "M15 4BR", "PA46 7RR", "l23 8tq", "SO24 9HG", "AL3 6AY", "OL3 6ED", "CF36 5HY", "HU13 0GN",
     "PA30 8HA", "PO18 0LE", "PE20 3HF", "EH9 1BR", "BS36 2UL", "PL35 0AJ", "BN17 7FX", "HU12 8NT",
-    "BB9 6NX", "LA9 6NN", "ME7 1UL", "WD7 8PR", "YO26 8LE", "CF47 9UN", "M8 4GP", "L4 1YE", "L 4 1 Y E  "
+    "BB9 6NX", "LA9 6NN", "ME7 1UL", "WD7 8PR", "YO26 8LE", "CF47 9UN", "M8      4GP", "L4 1YE", "L 4 1 Y E  "
 ]
 
 # Invalid postcodes are based off the validation notes, getting intentionally every one
@@ -29,7 +29,7 @@ invalid_postcodes = [
     # Double character areas only valid for single or double digit districts
     "BR11 1AA", "LL1B 1AA", "LL2 1AA",
     # Invalid areas with district 0
-    "BT0 1AA", "L4 oneYE"
+    "BT0 1AA", "L4 oneYE",
     # Number errors
     "1a4B1ye", '123456',
     # Letter errors
@@ -40,19 +40,19 @@ invalid_postcodes = [
 for postcode in valid_postcodes:
     check_postcode = UKPostcodeValidation(postcode)
     if check_postcode.validate():
-        print str(check_postcode.format()) + " - " + str(check_postcode.validate()) + "\n"
+        print(str(check_postcode.format()) + " - " + str(check_postcode.validate()) + "\n")
     else:
-        print postcode + " - " + check_postcode.validate() + "\n"
+        print(postcode + " - " + check_postcode.validate() + "\n")
 
 for postcode in invalid_postcodes:
     check_postcode = UKPostcodeValidation(postcode)
     if check_postcode.validate() == True:
-        print str(check_postcode.format()) + " - " + str(check_postcode.validate()) + "\n"
+        print(str(check_postcode.format()) + " - " + str(check_postcode.validate()) + "\n")
     else:
-        print postcode + " - " + str(check_postcode.validate()) + "\n"
+        print(postcode + " - " + str(check_postcode.validate()) + "\n")
 
 messy_postcodes = ["A l 36 A y", "L 4 1 Y E  ", "po 1 8 0 Le", "146 oneYE"]
 
 for mess in messy_postcodes:
     format_postcode = UKPostcodeValidation(mess)
-    print format_postcode.format()
+    print(format_postcode.format())
