@@ -58,11 +58,7 @@ class CharacterValidator:
         try:
             first_node = int(last_three_entries[0])
         except ValueError:
-            raise ValueError('''Invalid Postcode: 
-            Final three digits of a postcode will always end in a number then two letters - 
-            Found non-number at first node {} in {}{}{}'''.
-                             format(last_three_entries[0],
-                                    last_three_entries[0], last_three_entries[1], last_three_entries[2]))
+            raise ValueError("Invalid Postcode")
 
         # The next piece of validation is around ensuring the first node is a valid number and
         # the final two letters are in the list of acceptable letters
@@ -73,11 +69,7 @@ class CharacterValidator:
                     and last_three_entries[2] in FINAL_TWO_POSITIONS_LETTERS:
                 return True
             else:
-                raise ValueError('''Invalid Postcode: 
-            Final two digits can only contain letters, except for the following - C I K M O V
-            Found invalid entry in final two nodes {}{} in {}{}{}'''.
-                                 format(last_three_entries[1], last_three_entries[2],
-                                        last_three_entries[0], last_three_entries[1], last_three_entries[2]))
+                raise ValueError("Invalid Postcode")
 
     # Next we look into validating the Inward Code - consisting of the are and district code
     # The first one we look it is when this is two characters long
