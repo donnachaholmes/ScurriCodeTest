@@ -46,7 +46,7 @@ class CharacterValidator:
         self.single_digit_district_test = "".join(area_and_district_list[:2])
         self.double_digit_district_test = "".join(area_and_district_list[:2])
 
-        self.postcode = "".join(area_and_district_list)
+        self.area_and_district = "".join(area_and_district_list)
         self.postcode_first_position = "".join(area_and_district_list[:1])
         self.postcode_second_position = "".join(area_and_district_list[1:2])
         self.postcode_third_position = "".join(area_and_district_list[2:])
@@ -82,7 +82,7 @@ class CharacterValidator:
     # The only format that is expected here are is a letter and then a number
     # We use regex to ensure that the format is LetterNumber and that the letter is in the accepted list of letters
     def two_character_postcode_area_and_district_validation(self):
-        if re.match(r"^%s\d$" % SINGLE_FIRST_POSITION_LETTERS, self.postcode):
+        if re.match(r"^%s\d$" % SINGLE_FIRST_POSITION_LETTERS, self.area_and_district):
             return self.test_postcode_sector_and_unit_entries()
 
         # Otherwise, we return an error that this in valid format and give the correct one
@@ -94,10 +94,10 @@ class CharacterValidator:
     # or LetterNumberNumber
     # We use Regex again for this, giving the three entries and matching against their respecting acceptable entries
     def three_character_postcode_area_and_district_validation(self):
-        if re.match(r"^%s\d%s$" % FIRST_AND_THIRD_POSITION_LETTERS, self.postcode):
+        if re.match(r"^%s\d%s$" % FIRST_AND_THIRD_POSITION_LETTERS, self.area_and_district):
             return self.test_postcode_sector_and_unit_entries()
 
-        elif re.match(r"^%s\d{2}$" % SINGLE_FIRST_POSITION_LETTERS, self.postcode):
+        elif re.match(r"^%s\d{2}$" % SINGLE_FIRST_POSITION_LETTERS, self.area_and_district):
             return self.test_postcode_sector_and_unit_entries()
 
         # The format LetterLetterNumber requires additional formatting
@@ -105,9 +105,9 @@ class CharacterValidator:
         # This is one of the special validation cases mentioned above - we use the double digit district test
         # variable (which is just the postcode area and compare it against the list of areas that have single digit
         # districts. If it matches, we test the outward code, otherwise we return a detailed error
-        elif re.match(r"^%s%s\d$" % FIRST_AND_SECOND_POSITION_LETTERS, self.postcode) \
+        elif re.match(r"^%s%s\d$" % FIRST_AND_SECOND_POSITION_LETTERS, self.area_and_district) \
                 and self.double_digit_district_test not in DOUBLE_DIGIT_DISTRICTS:
-            zero_district_test = list(self.postcode)
+            zero_district_test = list(self.area_and_district_list)
             zero_district_test = int(zero_district_test[2])
             if zero_district_test == 0 and self.double_digit_district_test not in ZERO_DISTRICTS:
                 raise ValueError("Invalid Postcode")
@@ -124,7 +124,7 @@ class CharacterValidator:
     # We validate again with regex against the expected values in each of the entries with further validation
     # detailed below
     def four_character_postcode_area_and_district_validation(self):
-        if re.match(r"^%s%s\d%s$" % FIRST_SECOND_AND_FOURTH_POSITION_LETTERS, self.postcode):
+        if re.match(r"^%s%s\d%s$" % FIRST_SECOND_AND_FOURTH_POSITION_LETTERS, self.area_and_district):
                 # As this is a double digit area with a single digit district, we need to ensure that the area is not
                 # specified to only have a double digit district before validating - we again return a detailed error
                 # if conditions are not met
@@ -135,7 +135,7 @@ class CharacterValidator:
 
         # The extra validation here is making sure the area code is not in the only single digit district code list
         # If it is, we throw an error detailing this
-        elif re.match(r"^%s%s\d{2}$" % FIRST_AND_SECOND_POSITION_LETTERS, self.postcode):
+        elif re.match(r"^%s%s\d{2}$" % FIRST_AND_SECOND_POSITION_LETTERS, self.area_and_district):
                 if self.single_digit_district_test not in SINGLE_DIGIT_DISTRICTS:
                     return self.test_postcode_sector_and_unit_entries()
                 else:
