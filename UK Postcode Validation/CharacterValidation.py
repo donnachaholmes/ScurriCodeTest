@@ -12,12 +12,18 @@ NUMBERS = range(0, 10)
 FIRST_POSITION_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S',
                           'T', 'U', 'W', 'Y', 'Z']
 SINGLE_FIRST_POSITION_LETTERS = ["B", "E", "G", "L", "M", "N", "S", "W"]
+
 SECOND_POSITION_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'K', 'L',
                            'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y']
 THIRD_POSITION_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'P', 'S', 'T', 'U', 'W']
 FOURTH_POSITION_LETTERS = ['A', 'B', 'E', 'H', 'M', 'N', 'P', 'R', 'V', 'W', 'X', 'Y']
 FINAL_TWO_POSITIONS_LETTERS = ['A', 'B', 'D', 'E', 'F', 'G', 'H', 'J', 'L',
                                'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z']
+
+FIRST_AND_SECOND_POSITION_LETTERS = (FIRST_POSITION_LETTERS, SECOND_POSITION_LETTERS)
+FIRST_AND_THIRD_POSITION_LETTERS = (FIRST_POSITION_LETTERS, THIRD_POSITION_LETTERS)
+FIRST_SECOND_AND_FOURTH_POSITION_LETTERS = (FIRST_POSITION_LETTERS, SECOND_POSITION_LETTERS, FOURTH_POSITION_LETTERS)
+
 SINGLE_DIGIT_DISTRICTS = ['BR', 'FY', 'HA', 'HD', 'HG', 'HR', 'HS', 'HX', 'JE', 'LD', 'SM', 'SR', 'WN', 'ZE']
 DOUBLE_DIGIT_DISTRICTS = ['AB', 'LL', 'SO']
 ZERO_DISTRICTS = ['BL', 'BS', 'CM', 'CR', 'FY', 'HA', 'PR', 'SL', 'SS']
@@ -88,7 +94,7 @@ class CharacterValidator:
     # or LetterNumberNumber
     # We use Regex again for this, giving the three entries and matching against their respecting acceptable entries
     def three_character_postcode_area_and_district_validation(self):
-        if re.match(r"^%s\d%s$" % (FIRST_POSITION_LETTERS, THIRD_POSITION_LETTERS), self.postcode):
+        if re.match(r"^%s\d%s$" % FIRST_AND_THIRD_POSITION_LETTERS, self.postcode):
             return self.test_postcode_sector_and_unit_entries()
 
         elif re.match(r"^%s\d{2}$" % SINGLE_FIRST_POSITION_LETTERS, self.postcode):
@@ -99,7 +105,7 @@ class CharacterValidator:
         # This is one of the special validation cases mentioned above - we use the double digit district test
         # variable (which is just the postcode area and compare it against the list of areas that have single digit
         # districts. If it matches, we test the outward code, otherwise we return a detailed error
-        elif re.match(r"^%s%s\d$" % (FIRST_POSITION_LETTERS, SECOND_POSITION_LETTERS), self.postcode) \
+        elif re.match(r"^%s%s\d$" % FIRST_AND_SECOND_POSITION_LETTERS, self.postcode) \
                 and self.double_digit_district_test not in DOUBLE_DIGIT_DISTRICTS:
             zero_district_test = list(self.postcode)
             zero_district_test = int(zero_district_test[2])
@@ -118,8 +124,7 @@ class CharacterValidator:
     # We validate again with regex against the expected values in each of the entries with further validation
     # detailed below
     def four_character_postcode_area_and_district_validation(self):
-        if re.match(r"^%s%s\d%s$" % (FIRST_POSITION_LETTERS, SECOND_POSITION_LETTERS, FOURTH_POSITION_LETTERS),
-                    self.postcode):
+        if re.match(r"^%s%s\d%s$" % FIRST_SECOND_AND_FOURTH_POSITION_LETTERS, self.postcode):
                 # As this is a double digit area with a single digit district, we need to ensure that the area is not
                 # specified to only have a double digit district before validating - we again return a detailed error
                 # if conditions are not met
@@ -130,7 +135,7 @@ class CharacterValidator:
 
         # The extra validation here is making sure the area code is not in the only single digit district code list
         # If it is, we throw an error detailing this
-        elif re.match(r"^%s%s\d{2}$" % (FIRST_POSITION_LETTERS, SECOND_POSITION_LETTERS), self.postcode):
+        elif re.match(r"^%s%s\d{2}$" % FIRST_AND_SECOND_POSITION_LETTERS, self.postcode):
                 if self.single_digit_district_test not in SINGLE_DIGIT_DISTRICTS:
                     return self.test_postcode_sector_and_unit_entries()
                 else:
