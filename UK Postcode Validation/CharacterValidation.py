@@ -87,18 +87,9 @@ class CharacterValidator:
         if re.match(r"^%s\d$" % SINGLE_FIRST_POSITION_LETTERS, self.postcode):
             return self.test_postcode_sector_and_unit_entries()
 
-        # If the letter is not in the acceptable list, we return an error detailing this
-        elif self.single_digit_area_letter not in SINGLE_FIRST_POSITION_LETTERS:
-            raise ValueError('''Invalid Postcode: 
-            First characters of postcode is in the incorrect format 
-            The only single letters (not numbers) for an area are B, E, G, L, M, N, S or W - 
-            Found {}'''.format(self.single_digit_area_letter))
-
         # Otherwise, we return an error that this in valid format and give the correct one
         else:
-            raise ValueError('''Invalid Postcode: 
-            First two characters of postcode are in the incorrect format 
-            The first two characters of this postcode should be LetterNumber - Found {}'''.format(self.postcode))
+            raise ValueError("Invalid Postcode")
 
     # Next Inward Code for inspection are those of length three
     # These have the most types of formats accepting 3 types - LetterNumberLetter, LetterLetterNumber
