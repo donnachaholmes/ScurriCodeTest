@@ -63,7 +63,7 @@ class CharacterValidator:
             else:
                 raise ValueError("Invalid Postcode")
 
-    # Next we validate Inward Code - First is two character long inward code
+    # Next we validate Outward Code - First is two character long inward code
     def two_character_postcode_area_and_district_validation(self):
         if re.match(r"^%s\d$" % SINGLE_FIRST_POSITION_LETTERS, self.area_and_district):
             return self.test_postcode_sector_and_unit_entries()
