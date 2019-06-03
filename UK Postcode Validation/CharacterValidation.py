@@ -121,52 +121,14 @@ class CharacterValidator:
             zero_district_test = list(self.postcode)
             zero_district_test = int(zero_district_test[2])
             if zero_district_test == 0 and self.double_digit_district_test not in ZERO_DISTRICTS:
-                raise ValueError('''Invalid Postcode: 
-            The first three characters of postcode contain invalid data 
-            The the area {} cannot have a district 0
-            The only areas with district 0 are BL, BS, CM, CR, FY, HA, PR, SL and SS'''.
-                                 format(self.double_digit_district_test))
+                raise ValueError("Invalid Postcode")
             else:
                 return self.test_postcode_sector_and_unit_entries()
-
-        # At this point, the postcode is invalid but we want to return an accurate description of why it failed
-        # We compare the entries against what is expected to be in those entries, returning detailed errors
-        # We return here an error detailing that the single area code can only be in the list below, then we logically
-        # go through the positions to find the error returning specific details
-        elif self.single_digit_area_letter not in SINGLE_FIRST_POSITION_LETTERS:
-            raise ValueError('''Invalid Postcode: 
-            First characters of postcode is in the incorrect format 
-            The only single letters for an area are B, E, G, L, M, N, S or W - 
-            Found {}'''.format(self.single_digit_area_letter))
-
-        elif self.postcode_first_position not in FIRST_POSITION_LETTERS:
-            raise ValueError('''Invalid Postcode: 
-            The first character of a postcode is invalid
-            This character cannot be Q, V or X 
-            Found {}'''.format(self.postcode_first_position))
-
-        elif self.postcode_third_position not in THIRD_POSITION_LETTERS:
-            raise ValueError('''Invalid Postcode: 
-            The third character of a postcode is invalid
-            This character can only be A B C D E F G H J K P S T U or W
-            Found {}'''.format(self.postcode_third_position))
-
-        elif self.postcode_second_position not in SECOND_POSITION_LETTERS:
-            raise ValueError('''Invalid Postcode: 
-            The second character of a postcode is invalid
-            This character cannot be I, J or Z
-            Found {}'''.format(self.postcode_second_position))
 
         # Finally we return any other errors, including an invalid format of the postcode sent which is the only
         # possible case here
         else:
-            raise ValueError('''Invalid Postcode: 
-            The first three characters of postcode are in the incorrect format 
-            The first three characters of this postcode should be one of the following: 
-            LetterNumberLetter
-            LetterNumberNumber
-            LetterLetterNumber
-              - Found {}'''.format(self.postcode))
+            raise ValueError("Invalid Postcode")
 
     # The final validation is against the four character inward codes
     # There are two formats accepted - LetterLetterNumberLetter and LetterLetterNumberNumber
