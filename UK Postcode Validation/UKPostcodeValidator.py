@@ -15,12 +15,9 @@ class UKPostcodeValidation:
     # this is a private method
 
     def _validate_postcode_length(self):
-        original_postcode_input = self.postcode
         length = len(self.postcode)
         if length > 7 or length < 5:
-            raise ValueError('''Invalid Postcode: 
-            Length of a post code can be a maximum of 8 with a white space or a minimum of 5 without a white space - 
-            {} has a length of {} (without whitespace)'''.format(original_postcode_input, str(length)))
+            raise ValueError("Invalid Postcode")
         return True
 
     # The second stage of validation is checking the data within the postcode to be valid
