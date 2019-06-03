@@ -33,11 +33,11 @@ class UKPostcodeValidation:
         validate_characters = CharacterValidator(area_and_district, postcode_list)
 
         if len(area_and_district) == 2:
-            return validate_characters.two_character_postcode_area_and_district_validation()
+            return validate_characters.two_character_outward_code()
         elif len(area_and_district) == 3:
-            return validate_characters.three_character_postcode_area_and_district_validation()
+            return validate_characters.three_character_outward_code()
         else:
-            return validate_characters.four_character_postcode_area_and_district_validation()
+            return validate_characters.four_character_outward_code()
 
     # Code validation returns either True or an error code detailing the error
     # If the length and character both validate (from above) we return True, otherwise we return the error message

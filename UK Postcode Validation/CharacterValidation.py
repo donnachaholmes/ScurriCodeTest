@@ -44,7 +44,7 @@ class CharacterValidator:
     # The first method inspects the Inward Code - this is the final three entries in a postcode
     # The format expected is Number Letter Letter
     # We have a couple of cases that inspect the individual entries to ensure they are valid
-    def test_postcode_sector_and_unit_entries(self):
+    def test_inward_code(self):
         last_three_entries = self.full_postcode_list[len(self.full_postcode_list):len(self.full_postcode_list) - 4:-1]
         last_three_entries = last_three_entries[::-1]
 
@@ -64,20 +64,20 @@ class CharacterValidator:
                 raise ValueError("Invalid Postcode")
 
     # Next we validate Outward Code - First is two character long inward code
-    def two_character_postcode_area_and_district_validation(self):
+    def two_character_outward_code(self):
         if re.match(r"^%s\d$" % SINGLE_FIRST_POSITION_LETTERS, self.area_and_district):
-            return self.test_postcode_sector_and_unit_entries()
+            return self.test_inward_code()
         else:
             raise ValueError("Invalid Postcode")
 
     # Next is three character long validation, we test the format and the letters are acceptable
     # and the district is accepable if it is double digit
-    def three_character_postcode_area_and_district_validation(self):
+    def three_character_outward_code(self):
         if re.match(r"^%s\d%s$" % FIRST_AND_THIRD_POSITION_LETTERS, self.area_and_district):
-            return self.test_postcode_sector_and_unit_entries()
+            return self.test_inward_code()
 
         elif re.match(r"^%s\d{2}$" % SINGLE_FIRST_POSITION_LETTERS, self.area_and_district):
-            return self.test_postcode_sector_and_unit_entries()
+            return self.test_inward_code()
 
         elif re.match(r"^%s%s\d$" % FIRST_AND_SECOND_POSITION_LETTERS, self.area_and_district) \
                 and self.district_test not in DOUBLE_DIGIT_DISTRICTS:
@@ -85,23 +85,23 @@ class CharacterValidator:
             if zero_district_test == 0 and self.district_test not in ZERO_DISTRICTS:
                 raise ValueError("Invalid Postcode")
             else:
-                return self.test_postcode_sector_and_unit_entries()
+                return self.test_inward_code()
 
         else:
             raise ValueError("Invalid Postcode")
 
     # The final validation is against the four character inward codes The two formats are
     # tested and we test the districts are acceptable whether it is double or single digit
-    def four_character_postcode_area_and_district_validation(self):
+    def four_character_outward_code(self):
         if re.match(r"^%s%s\d%s$" % FIRST_SECOND_AND_FOURTH_POSITION_LETTERS, self.area_and_district):
                 if self.district_test not in DOUBLE_DIGIT_DISTRICTS:
-                    return self.test_postcode_sector_and_unit_entries()
+                    return self.test_inward_code()
                 else:
                     raise ValueError("Invalid Postcode")
 
         elif re.match(r"^%s%s\d{2}$" % FIRST_AND_SECOND_POSITION_LETTERS, self.area_and_district):
                 if self.district_test not in SINGLE_DIGIT_DISTRICTS:
-                    return self.test_postcode_sector_and_unit_entries()
+                    return self.test_inward_code()
                 else:
                     raise ValueError("Invalid Postcode")
 
