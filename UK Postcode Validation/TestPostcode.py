@@ -39,17 +39,11 @@ invalid_postcodes = [
 # Now we just loop through everything and give the responses
 for postcode in valid_postcodes:
     check_postcode = UKPostcodeValidation(postcode)
-    if check_postcode.validate():
-        print(str(check_postcode.format()) + " - " + str(check_postcode.validate()) + "\n")
-    else:
-        print(postcode + " - " + check_postcode.validate() + "\n")
+    assert check_postcode.validate() == True, "Postcode should be valid"
 
 for postcode in invalid_postcodes:
     check_postcode = UKPostcodeValidation(postcode)
-    if check_postcode.validate() == True:
-        print(str(check_postcode.format()) + " - " + str(check_postcode.validate()) + "\n")
-    else:
-        print(postcode + " - " + str(check_postcode.validate()) + "\n")
+    assert str(check_postcode.validate()) == "Invalid Postcode", "Invalid postcode expected"
 
 messy_postcodes = ["A l 36 A y", "L 4 1 Y E  ", "po 1 8 0 Le", "146 oneYE"]
 
