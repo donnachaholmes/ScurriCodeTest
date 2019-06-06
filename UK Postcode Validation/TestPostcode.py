@@ -39,6 +39,7 @@ invalid_postcodes = [
 # Now we just loop through everything and give the responses
 for postcode in valid_postcodes:
     check_postcode = UKPostcodeValidation(postcode)
+    print(postcode)
     assert check_postcode.validate() == True, "Postcode should be valid"
 
 for postcode in invalid_postcodes:
