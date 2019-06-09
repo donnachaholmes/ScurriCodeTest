@@ -31,12 +31,8 @@ class UKPostcodeValidation:
         try:
             if self._validate_postcode_length() \
                     and self.validate():
-                postcode_list = list(self.postcode)
-                postcode_area_and_district_list = postcode_list[:len(postcode_list) - 3]
-                postcode_sector_and_unit_list = postcode_list[len(postcode_list):len(postcode_list) - 4:-1]
-                postcode_sector_and_unit_list = postcode_sector_and_unit_list[::-1]
-                postcode_area_and_district = "".join(postcode_area_and_district_list)
-                postcode_sector_and_unit = "".join(postcode_sector_and_unit_list)
-                return postcode_area_and_district + " " + postcode_sector_and_unit
+                outward_code = self.postcode[:len(self.postcode) - 3]
+                inward_code = self.postcode[-3::]
+                return outward_code + " " + inward_code
         except ValueError:
             return "Cannot format due to invalid postcode"
