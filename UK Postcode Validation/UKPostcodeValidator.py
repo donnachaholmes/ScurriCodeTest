@@ -20,8 +20,8 @@ class UKPostcodeValidation:
     def validate(self):
         validate_characters = CharacterValidator(self.postcode)
         try:
-            if self._validate_postcode_length() \
-                    and validate_characters.validate_postcode_entries():
+            if self._validate_postcode_length() and \
+                    validate_characters.validate_postcode_entries():
                 return True
         except ValueError as err:
             return err
@@ -29,8 +29,7 @@ class UKPostcodeValidation:
     # The format method returns the postcode in the proper format if valid
     def format(self):
         try:
-            if self._validate_postcode_length() \
-                    and self.validate():
+            if self._validate_postcode_length() and self.validate():
                 outward_code = self.postcode[:len(self.postcode) - 3]
                 inward_code = self.postcode[-3::]
                 return outward_code + " " + inward_code
