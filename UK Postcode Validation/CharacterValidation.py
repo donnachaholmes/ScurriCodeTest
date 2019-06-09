@@ -33,6 +33,25 @@ ONLY_AREAS_WITH_ZERO_DISTRICT = [
     'BL', 'BS', 'CM', 'CR', 'FY', 'HA', 'PR', 'SL', 'SS'
 ]
 
+LETTER_NUMBER = re.compile(r"^%s\d$" % SINGLE_FIRST_POSITION_LETTERS)
+LETTER_NUMBER_LETTER = re.compile(r"^%s\d%s$" % (
+    VALID_FIRST_POSITION_LETTERS, VALID_THIRD_POSITION_LETTERS
+))
+LETTER_NUMBER_NUMBER = re.compile(
+    r"^%s\d{2}$" % SINGLE_FIRST_POSITION_LETTERS
+)
+LETTER_LETTER_NUMBER = re.compile(r"^%s%s\d$" % (
+    VALID_FIRST_POSITION_LETTERS, VALID_SECOND_POSITION_LETTERS
+))
+LETTER_LETTER_NUMBER_LETTER = re.compile(r"^%s%s\d%s$" % (
+    VALID_FIRST_POSITION_LETTERS,
+    VALID_SECOND_POSITION_LETTERS,
+    VALID_FOURTH_POSITION_LETTERS
+))
+LETTER_LETTER_NUMBER_NUMBER = re.compile(r"^%s%s\d{2}$" % (
+    VALID_FIRST_POSITION_LETTERS, VALID_SECOND_POSITION_LETTERS
+))
+
 
 class CharacterValidator:
     # To test the postcodes we need to split the post codes into the different
@@ -64,39 +83,24 @@ class CharacterValidator:
 
     # Next we validate Outward Code - First is two character long inward code
     def check_two_character_outward_code(self):
-        if re.match(
-                r"^%s\d$" % SINGLE_FIRST_POSITION_LETTERS,
-                self.outward_code
-        ):
+        if LETTER_NUMBER.match(self.outward_code):
             return True
         raise ValueError("Invalid Postcode")
 
     # Next is three character long validation, we test the format and the
     # letters are acceptable and the district is correct if it is double digit
     def check_three_character_outward_code(self):
-        if re.match(
-                r"^%s\d%s$" % (
-                    VALID_FIRST_POSITION_LETTERS, VALID_THIRD_POSITION_LETTERS
-                ),
-                self.outward_code
-        ):
+        if LETTER_NUMBER_LETTER.match(self.outward_code):
             return True
 
-        elif re.match(
-                r"^%s\d{2}$" % SINGLE_FIRST_POSITION_LETTERS,
-                self.outward_code
-        ):
+        elif LETTER_NUMBER_NUMBER.match(self.outward_code):
             return True
 
-        elif re.match(
-                r"^%s%s\d$" % (
-                    VALID_FIRST_POSITION_LETTERS, VALID_SECOND_POSITION_LETTERS
-                ),
-                self.outward_code) and \
+        elif LETTER_LETTER_NUMBER.match(self.outward_code) and \
                 self.area_code not in AREAS_WITH_ONLY_DOUBLE_DIGIT_DISTRICTS:
             zero_district_code_check = int(self.outward_code[2])
-            if zero_district_code_check == 0 \
-                    and self.area_code not in ONLY_AREAS_WITH_ZERO_DISTRICT:
+            if zero_district_code_check == 0 and \
+                    self.area_code not in ONLY_AREAS_WITH_ZERO_DISTRICT:
                 raise ValueError("Invalid Postcode")
             else:
                 return True
@@ -107,24 +111,12 @@ class CharacterValidator:
     # The two formats are tested and we test the districts are acceptable
     # whether it is double or single digit
     def check_four_character_outward_code(self):
-        if re.match(
-                r"^%s%s\d%s$" % (
-                        VALID_FIRST_POSITION_LETTERS,
-                        VALID_SECOND_POSITION_LETTERS,
-                        VALID_FOURTH_POSITION_LETTERS
-                ),
-                self.outward_code
-        ):
+        if LETTER_LETTER_NUMBER_LETTER.match(self.outward_code):
             if self.area_code not in AREAS_WITH_ONLY_DOUBLE_DIGIT_DISTRICTS:
                 return True
             raise ValueError("Invalid Postcode")
 
-        elif re.match(
-                r"^%s%s\d{2}$" % (
-                    VALID_FIRST_POSITION_LETTERS, VALID_SECOND_POSITION_LETTERS
-                ),
-                self.outward_code
-        ):
+        elif LETTER_LETTER_NUMBER_NUMBER.match(self.outward_code):
             if self.area_code not in AREAS_WITH_ONLY_SINGLE_DIGIT_DISTRICTS:
                 return True
 
