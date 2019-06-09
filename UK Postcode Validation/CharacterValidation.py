@@ -59,15 +59,9 @@ class CharacterValidator:
     # and if it is validated the outward code is then tested we return True if
     # it gets to the end of val, otherwise we return 'Invalid Postcode'
     def __init__(self, postcode):
-        self.postcode = postcode
         self.outward_code = postcode[:len(postcode) - 3]
-        self.inward_code = self.postcode[-3::]
+        self.inward_code = postcode[-3::]
         self.area_code = "".join(self.outward_code[:2])
-
-        self.postcode_first_position = "".join(self.outward_code[:1])
-        self.postcode_second_position = "".join(self.outward_code[1:2])
-        self.postcode_third_position = "".join(self.outward_code[2:])
-        self.postcode_fourth_position = "".join(self.outward_code[3:])
 
     def validate_postcode_entries(self):
         if self.check_outward_code() and self.check_inward_code():
