@@ -16,27 +16,12 @@ class UKPostcodeValidation:
             raise ValueError("Invalid Postcode")
         return True
 
-    # The second stage of validation is checking the data within the postcode
-    # The method used depends on the length of the outward code
-    def _validate_postcode_entries(self):
-        postcode_list = list(self.postcode)
-        area_and_district = postcode_list[:len(postcode_list) - 3]
-        validate_characters = CharacterValidator(
-            area_and_district, postcode_list
-        )
-
-        if len(area_and_district) == 2:
-            return validate_characters.two_character_outward_code()
-        elif len(area_and_district) == 3:
-            return validate_characters.three_character_outward_code()
-        else:
-            return validate_characters.four_character_outward_code()
-
     # The validate method used by the user - returns True or 'Invalid Postcode'
     def validate(self):
+        validate_characters = CharacterValidator(self.postcode)
         try:
             if self._validate_postcode_length() \
-                    and self._validate_postcode_entries():
+                    and validate_characters.validate_postcode_entries():
                 return True
         except ValueError as err:
             return err
@@ -45,7 +30,7 @@ class UKPostcodeValidation:
     def format(self):
         try:
             if self._validate_postcode_length() \
-                    and self._validate_postcode_entries():
+                    and self.validate():
                 postcode_list = list(self.postcode)
                 postcode_area_and_district_list = postcode_list[:len(postcode_list) - 3]
                 postcode_sector_and_unit_list = postcode_list[len(postcode_list):len(postcode_list) - 4:-1]
@@ -53,5 +38,5 @@ class UKPostcodeValidation:
                 postcode_area_and_district = "".join(postcode_area_and_district_list)
                 postcode_sector_and_unit = "".join(postcode_sector_and_unit_list)
                 return postcode_area_and_district + " " + postcode_sector_and_unit
-        except ValueError as err:
-            return "Cannot format due to {}".format(err)
+        except ValueError:
+            return "Cannot format due to invalid postcode"
