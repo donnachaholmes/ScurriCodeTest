@@ -1,11 +1,13 @@
 from uk_postcode_validator import UKPostcodeValidation
 
 
+# We first test valid and invalid outward codes
 def test_valid_two_character_outward_code():
     check_postcode = UKPostcodeValidation()
     assert check_postcode.validate("M1 1AE") is True
 
 
+# The invalid data contain invalid data in postions and invalid patterns
 def test_invalid_two_character_outward_code():
     check_postcode = UKPostcodeValidation()
     assert str(check_postcode.validate("A1 1AE")) == "Invalid Postcode"
@@ -21,10 +23,16 @@ def test_valid_three_character_outward_code():
     assert check_postcode.validate("BL0 1AA") is True
 
 
+# The first 2 test below fail because only certain areas BT can have a 0
+# district and certain areas can only have a double digit district - these
+# areas do not qualify.
 def test_invalid_three_character_outward_code():
     check_postcode = UKPostcodeValidation()
     assert str(check_postcode.validate("AB2 6XH")) == "Invalid Postcode"
     assert str(check_postcode.validate("BT0 1AA")) == "Invalid Postcode"
+    assert str(check_postcode.validate("AAA 8TH")) == "Invalid Postcode"
+    assert str(check_postcode.validate("123 8TH")) == "Invalid Postcode"
+    assert str(check_postcode.validate("2AA 8TH")) == "Invalid Postcode"
 
 
 def test_valid_four_character_outward_code():
@@ -33,10 +41,15 @@ def test_valid_four_character_outward_code():
     assert check_postcode.validate("SW1A 1AA") is True
 
 
+# The first 2 test below fail because some areas can only have a double
+# digit district and some areas can only have single digit districts
 def test_invalid_four_character_outward_code():
     check_postcode = UKPostcodeValidation()
     assert str(check_postcode.validate("BR11 1AA")) == "Invalid Postcode"
     assert str(check_postcode.validate("LL1B 1AA")) == "Invalid Postcode"
+    assert str(check_postcode.validate("LLAB 1AA")) == "Invalid Postcode"
+    assert str(check_postcode.validate("1234 1AA")) == "Invalid Postcode"
+    assert str(check_postcode.validate("L2F3 1AA")) == "Invalid Postcode"
 
 
 def test_invalid_inward_code():
@@ -47,7 +60,8 @@ def test_invalid_inward_code():
     assert str(check_postcode.validate("M1 1IA")) == "Invalid Postcode"
 
 
-def test_invalid_inward_letter_entries():
+# Tests for invald letters in the first four postcode positions
+def test_invalid_outward_letter_entries():
     check_postcode = UKPostcodeValidation()
     assert str(check_postcode.validate("QE12 8HJ")) == "Invalid Postcode"
     assert str(check_postcode.validate("AI12 8HJ")) == "Invalid Postcode"
@@ -77,4 +91,4 @@ def test_valid_postcode_format_function():
 def test_invalid_postcode_format_function():
     format_postcode = UKPostcodeValidation()
     assert format_postcode.format("146 oneYE") \
-           == "Cannot format due to invalid postcode"
+        == "Cannot format due to invalid postcode"
