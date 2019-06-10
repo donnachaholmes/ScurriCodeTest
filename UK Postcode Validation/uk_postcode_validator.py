@@ -1,4 +1,4 @@
-from CharacterValidation import CharacterValidator
+from character_validation import CharacterValidator
 
 
 class UKPostcodeValidation:

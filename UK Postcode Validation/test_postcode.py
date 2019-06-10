@@ -1,4 +1,4 @@
-from UKPostcodeValidator import UKPostcodeValidation
+from uk_postcode_validator import UKPostcodeValidation
 # For the valid codes, I used the examples from the wikipedia page:
 # https://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom
 # and used this generator:https://www.doogal.co.uk/PostcodeGenerator.php
