@@ -1,7 +1,9 @@
-These are the solutions I have created to the problems sent out in the coding test
+# Scurri Code Test
 
-They are coded in python 2.7.15
+These are the solutions I have created to the problems sent out in the coding test.
 
-I have included comments in the code to describe how this works
+They are coded in python 2.7.15.
 
-If there are any questions, please ask away
+I have included comments in the code to describe how this works.
+
+If there are any questions, please ask.
