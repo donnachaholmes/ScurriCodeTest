@@ -28,7 +28,7 @@ class UKPostcodeValidation:
         postcode = postcode.upper()
         postcode = "".join(postcode.split())
         try:
-            if self._validate_postcode_length(postcode) and self.validate():
+            if self._validate_postcode_length(postcode) and self.validate(postcode):
                 outward_code = postcode[:len(postcode) - 3]
                 inward_code = postcode[-3::]
                 return outward_code + " " + inward_code
