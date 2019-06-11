@@ -11,7 +11,7 @@ class UKPostcodeValidation:
             raise ValueError("Invalid Postcode")
         return True
 
-    # The validate method used by the user - returns True or 'Invalid Postcode'
+    # The validate method used by user - returns True or 'Invalid Postcode'
     def validate(self, postcode):
         postcode = postcode.upper()
         postcode = "".join(postcode.split())
@@ -28,7 +28,8 @@ class UKPostcodeValidation:
         postcode = postcode.upper()
         postcode = "".join(postcode.split())
         try:
-            if self._validate_postcode_length(postcode) and self.validate(postcode):
+            if self._validate_postcode_length(postcode) and \
+                    self.validate(postcode):
                 outward_code = postcode[:len(postcode) - 3]
                 inward_code = postcode[-3::]
                 return outward_code + " " + inward_code
