@@ -102,7 +102,6 @@ class CharacterValidator:
         if LETTER_LETTER_NUMBER_LETTER_PATTERN.match(self.outward_code):
             if self.area_code not in AREAS_WITH_ONLY_DOUBLE_DIGIT_DISTRICTS:
                 return True
-            raise ValueError("Invalid Postcode")
 
         elif LETTER_LETTER_NUMBER_NUMBER_PATTERN.match(self.outward_code):
             if self.area_code not in AREAS_WITH_ONLY_SINGLE_DIGIT_DISTRICTS:
